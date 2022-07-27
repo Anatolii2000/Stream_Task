@@ -5,6 +5,8 @@ import numpy as np
 import plotly.express as px
 from PIL import Image
 import io
+from  get_data_from_dbs import get_result_from_db
+
 
 
 #st.set_page_config(layout='wide') #Choose wide mode as the default setting
@@ -71,7 +73,7 @@ if uploaded_file is not None:
     grid_response = AgGrid(
         Tasks,
         editable=True,
-        height=300,
+        height=200,
         width='100%',
     )
 
@@ -124,18 +126,19 @@ if st.button('Generate Gantt Chart'):
     fig.update_xaxes(tickangle=0, tickfont=dict(family='Rockwell', color='blue', size=15))
 
     st.plotly_chart(fig, use_container_width=True)  # Display the plotly chart in Streamlit
+    data = get_result_from_db()
+    print(data)
 
-"""    st.subheader(
-            'Bonus: Export the interactive Gantt chart to HTML and share with others!')  # Allow users to export the Plotly chart to HTML
-    buffer = io.StringIO()
-    fig.write_html(buffer, include_plotlyjs='cdn')
-    html_bytes = buffer.getvalue().encode()
-    st.download_button(
-        label='Export to HTML',
-        data=html_bytes,
-        file_name='Gantt.html',
-        mime='text/html'
-    )
-else:
-    st.write('---')
-"""
+#    st.subheader(
+#           'Bonus: Export the interactive Gantt chart to HTML and share with others!')  # Allow users to export the Plotly chart to HTML
+#    buffer = io.StringIO()
+#    fig.write_html(buffer, include_plotlyjs='cdn')
+#    html_bytes = buffer.getvalue().encode()
+#    st.download_button(
+#        label='Export to HTML',
+#        data=html_bytes,
+#        file_name='Gantt.html',
+#        mime='text/html'
+#    )
+#else:
+#    st.write('---')
