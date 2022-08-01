@@ -5,6 +5,7 @@ import numpy as np
 import plotly.express as px
 from PIL import Image
 import io
+
 from  get_data_from_dbs import get_result_from_db
 
 
@@ -66,9 +67,9 @@ uploaded_file = st.file_uploader(
     "Fill out the project plan template and upload your file here. After you upload the file, you can edit your project plan within the app.",
     type=['csv'])
 if uploaded_file is not None:
-    Tasks = pd.read_csv(uploaded_file)
-    Tasks['Start'] = Tasks['Start'].astype('datetime64[D]')
-    Tasks['Finish'] = Tasks['Finish'].astype('datetime64[D]')
+    Tasks = pd.read_csv(uploaded_file , encoding="windows - 1251")
+#    Tasks['Start'] = Tasks['Start'].astype('datetime64[D]')
+#    Tasks['Finish'] = Tasks['Finish'].astype('datetime64[D]')
 
     grid_response = AgGrid(
         Tasks,
@@ -129,16 +130,3 @@ if st.button('Generate Gantt Chart'):
     data = get_result_from_db()
     print(data)
 
-#    st.subheader(
-#           'Bonus: Export the interactive Gantt chart to HTML and share with others!')  # Allow users to export the Plotly chart to HTML
-#    buffer = io.StringIO()
-#    fig.write_html(buffer, include_plotlyjs='cdn')
-#    html_bytes = buffer.getvalue().encode()
-#    st.download_button(
-#        label='Export to HTML',
-#        data=html_bytes,
-#        file_name='Gantt.html',
-#        mime='text/html'
-#    )
-#else:
-#    st.write('---')
